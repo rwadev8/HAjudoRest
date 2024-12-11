@@ -13,4 +13,4 @@ The water consumption value waterQty should be the total consuption, and it incl
 
 ## Links
 
-The API can be found at https://judo.eu/en/products/api/
+The API can be found at https://judo.eu/en/products/api/. Hint: switch the web site language to german to get the link to the API document.
