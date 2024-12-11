@@ -1,0 +1,98 @@
+rest:
+  - authentication: basic
+    username: !secret judo_rest_user
+    password: !secret judo_rest_password
+    scan_interval: 60
+    resource: http://172.16.230.43/api/rest/2800
+    sensor:
+      - name: waterQty
+        device_class: water
+        unit_of_measurement: "L"
+        unique_id: judo_isoft_2800
+        state_class: total_increasing
+        value_template: >
+          {% set hex = value_json.data %}
+          {% set b1 = hex[0:2] %}
+          {% set b2 = hex[2:4] %}
+          {% set b3 = hex[4:6] %}
+          {% set b4 = hex[6:8] %}
+          {{ (b4+b3+b2+b1) | int(base=16) }}
+        #device: #not allowed for rest sensors
+        #  name: "isoft"
+        #  identifiers:
+        #    - "isoft"
+        #  model: iSoft Safe+
+        #  manufacturer: Judo
+        #  sw_version: 3.0.7
+
+  - authentication: basic
+    username: !secret judo_rest_user
+    password: !secret judo_rest_password
+    scan_interval: 60
+    resource: http://172.16.230.43/api/rest/2900
+    sensor:
+      - name: waterQtySoft
+        device_class: water
+        unit_of_measurement: "L"
+        unique_id: judo_isoft_2900
+        state_class: total_increasing
+        value_template: >
+          {% set hex = value_json.data %}
+          {% set b1 = hex[0:2] %}
+          {% set b2 = hex[2:4] %}
+          {% set b3 = hex[4:6] %}
+          {% set b4 = hex[6:8] %}
+          {{ (b4+b3+b2+b1) | int(base=16) }}
+
+  - authentication: basic
+    username: !secret judo_rest_user
+    password: !secret judo_rest_password
+    scan_interval: 60
+    resource: http://172.16.230.43/api/rest/5100
+    sensor:
+      - name: waterHardness
+        unit_of_measurement: "°dH"
+        unique_id: judo_isoft_waterHardness
+        state_class: measurement
+        value_template: >
+          {% set hex = value_json.data %}
+          {% set b1 = hex[0:2] %}
+          {% set b2 = hex[2:4] %}
+          {{ (b1) | int(base=16) }}
+  - authentication: basic
+    username: !secret judo_rest_user
+    password: !secret judo_rest_password
+    scan_interval: 60
+    resource: http://172.16.230.43/api/rest/5600
+    sensor:
+      - name: saltWeight
+        device_class: weight
+        unit_of_measurement: "g"
+        unique_id: judo_isoft_saltWeight
+        state_class: measurement
+        value_template: >
+          {% set hex = value_json.data %}
+          {% set b1 = hex[0:2] %}
+          {% set b2 = hex[2:4] %}
+          {% set b3 = hex[4:6] %}
+          {% set b4 = hex[6:8] %}
+          {{ (b2+b1) | int(base=16) }}
+
+  - authentication: basic
+    username: !secret judo_rest_user
+    password: !secret judo_rest_password
+    scan_interval: 60
+    resource: http://172.16.230.43/api/rest/5600
+    sensor:
+      - name: saltReach
+        device_class: duration
+        unit_of_measurement: "d"
+        unique_id: judo_isoft_saltReach
+        state_class: measurement
+        value_template: >
+          {% set hex = value_json.data %}
+          {% set b1 = hex[0:2] %}
+          {% set b2 = hex[2:4] %}
+          {% set b3 = hex[4:6] %}
+          {% set b4 = hex[6:8] %}
+          {{ (b4+b3) | int(base=16) }}
